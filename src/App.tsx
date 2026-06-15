@@ -276,7 +276,6 @@ function WhyDownload() {
               <span className="feature-icon"><feature.icon size={26} /></span>
               <h3>{feature.title}</h3>
               <p>{feature.body}</p>
-              <span className="card-arrow" aria-hidden="true"><ArrowRight size={17} /></span>
             </article>
           ))}
         </div>
