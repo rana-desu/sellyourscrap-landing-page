@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SellYourScrap - Doorstep Scrap Pickup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "text-on-dark": "#F4F9F4",
+                "surface-tint": "#45664b",
+                "primary-container": "#16361f",
+                "on-secondary-container": "#22723d",
+                "primary-fixed-dim": "#abd0af",
+                "primary": "#01200c",
+                "tertiary": "#00200d",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed-variant": "#2e4e35",
+                "surface-container-highest": "#dfe4df",
+                "surface-container-low": "#f0f5f0",
+                "on-tertiary-container": "#46aa6a",
+                "tertiary-fixed-dim": "#78db96",
+                "on-primary": "#ffffff",
+                "secondary-container": "#a3f5b2",
+                "on-secondary-fixed": "#00210b",
+                "background": "#f6fbf6",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c2c8bf",
+                "surface-container-high": "#e4e9e5",
+                "on-primary-fixed": "#01210c",
+                "on-surface": "#171d1a",
+                "secondary-fixed-dim": "#88d898",
+                "on-surface-variant": "#424842",
+                "error-container": "#ffdad6",
+                "on-secondary-fixed-variant": "#005225",
+                "surface-bright": "#f6fbf6",
+                "inverse-surface": "#2c322f",
+                "surface": "#f6fbf6",
+                "on-background": "#171d1a",
+                "error": "#ba1a1a",
+                "on-primary-container": "#7da082",
+                "on-tertiary-fixed-variant": "#00522a",
+                "secondary": "#1a6c37",
+                "on-error": "#ffffff",
+                "surface-dim": "#d6dbd7",
+                "outline": "#727971",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#00210d",
+                "text-on-light": "#1A1A1A",
+                "tertiary-fixed": "#94f8b0",
+                "surface-variant": "#dfe4df",
+                "on-error-container": "#93000a",
+                "tertiary-container": "#00381a",
+                "inverse-on-surface": "#edf2ed",
+                "surface-container": "#eaefea",
+                "primary-fixed": "#c6ecca",
+                "secondary-fixed": "#a3f5b2",
+                "inverse-primary": "#abd0af"
+        },
+        "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "base": "8px",
+                "section-gap-desktop": "160px",
+                "section-gap-mobile": "80px",
+                "gutter": "24px",
+                "grid-margin": "40px"
+        },
+        "fontFamily": {
+                "headline-lg": [
+                        "Playfair Display"
+                ],
+                "headline-md": [
+                        "Playfair Display"
+                ],
+                "display-hero": [
+                        "Playfair Display"
+                ],
+                "body-lg": [
+                        "DM Sans"
+                ],
+                "body-md": [
+                        "DM Sans"
+                ],
+                "label-sm": [
+                        "DM Sans"
+                ],
+                "display-hero-mobile": [
+                        "Playfair Display"
+                ],
+                "sora": [
+                        "Sora",
+                        "sans-serif"
+                ]
+        },
+        "fontSize": {
+                "headline-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-md": [
+                        "32px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ],
+                "display-hero": [
+                        "84px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-sm": [
+                        "13px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-hero-mobile": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+          font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Scroll Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+        .stagger-5 { transition-delay: 500ms; }
+        .stagger-6 { transition-delay: 600ms; }
+
+        .nav-scrolled {
+            background-color: rgba(1, 32, 12, 0.95); /* primary color */
+            backdrop-filter: blur(10px);
+            color: #ffffff; /* Override text color on scroll */
+        }
+        .nav-scrolled .nav-link, .nav-scrolled .brand-logo {
+             color: #F4F9F4 !important;
+        }
+
+        .clip-mask-wipe {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+            transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .clip-mask-wipe.is-visible {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* 3D Tilt Cards */
+        .tilt-card {
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+        }
+        .tilt-card-content {
+            transform: translateZ(30px);
+        }
+        .tilt-shine {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.3) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 5;
+        }
+        .tilt-card:hover .tilt-shine {
+            opacity: 1;
+        }
+        .watermark-num {
+            position: absolute;
+            font-size: 120px;
+            font-weight: bold;
+            color: rgba(0,0,0,0.03);
+            top: -20px;
+            right: -10px;
+            z-index: 0;
+            pointer-events: none;
+            transition: transform 0.1s;
+        }
+
+        /* Magnetic Icons */
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .magnetic-icon {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform;
+        }
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .feature-card:hover::after {
+            animation: shimmerSweep 0.6s ease-out forwards;
+        }
+        @keyframes shimmerSweep {
+            100% { left: 200%; }
+        }
+
+        /* Draggable Chips */
+        .chip-cluster-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .draggable-chip {
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            will-change: transform, left, top;
+        }
+        .draggable-chip:active {
+            cursor: grabbing;
+            transform: scale(1.08) !important;
+            box-shadow: 0 10px 25px rgba(76, 175, 111, 0.3) !important;
+            z-index: 100 !important;
+        }
+        .chip-enter {
+            animation: chipFlyIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        @keyframes chipFlyIn {
+            to { opacity: 1; transform: translate(0, 0); }
+        }
+
+        /* Coverflow Carousel */
+        .coverflow-container {
+            perspective: 1200px;
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+        .coverflow-item {
+            position: absolute;
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.45s, z-index 0.45s;
+            cursor: pointer;
+            will-change: transform, opacity;
+        }
+        .coverflow-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+            color: #16361F;
+            border: 1px solid #e4e9e5;
+            transition: all 0.2s;
+        }
+        .coverflow-nav-btn:hover {
+            background: #4CAF6F;
+            color: white;
+            border-color: #4CAF6F;
+        }
+        .coverflow-prev { left: 20px; }
+        .coverflow-next { right: 20px; }
+        .coverflow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .coverflow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: #c2c8bf;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .coverflow-dot.active {
+            width: 24px;
+            background: #4CAF6F;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 transition-all duration-300 py-4 bg-transparent text-on-surface" id="mainNav">
+<div class="flex justify-between items-center w-full px-grid-margin max-w-7xl mx-auto">
+<a class="brand-logo font-headline-md text-headline-md font-bold text-primary transition-colors" href="#">
+                <img src="assets/brand-logo.svg" alt="SellYourScrap" class="h-10 w-auto" />
+            </a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#how-it-works">How It Works</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#features">Features</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#categories">Categories</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#screenshots">App</a>
+</div>
+<a class="hidden md:inline-flex px-6 py-3 bg-[#16361F] text-text-on-dark font-label-sm text-label-sm rounded-full hover:bg-[#4CAF6F] transition-colors items-center gap-2" href="https://play.google.com/store/apps/details?id=sellyourscrap.in">
+                Download App
+            </a>
+<!-- Mobile Menu Button (Simplified for this exercise) -->
+<button class="md:hidden text-primary nav-link">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[921px] pt-32 pb-section-gap-mobile md:pb-section-gap-desktop px-grid-margin overflow-hidden flex items-center bg-[#F4F9F4]">
+<!-- Decorative Background Elements -->
+<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-surface-tint rounded-full opacity-50 blur-3xl -translate-y-1/4 translate-x-1/4 -z-10"></div>
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Content -->
+<div class="lg:col-span-6 z-10 fade-in-up">
+<h1 class="font-sora text-display-hero-mobile md:text-display-hero text-[#16361F] mb-6 leading-tight">
+                        Sell Scrap From Your Doorstep
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-lg">
+                        Check live scrap rates, book a pickup, and track your recycling order with SellYourScrap. Reliable, local, and eco-conscious.
+                    </p>
+<div class="flex flex-wrap gap-4 mb-12">
+<a class="px-8 py-4 bg-[#4CAF6F] text-[#F4F9F4] font-label-sm text-label-sm rounded-full hover:bg-[#16361F] transition-colors inline-flex items-center gap-2" href="https://play.google.com/store/apps/details?id=sellyourscrap.in">
+<span class="material-symbols-outlined">android</span>
+                            Download App
+                        </a>
+<a class="px-8 py-4 border-2 border-primary-container text-primary-container font-label-sm text-label-sm rounded-full hover:bg-surface-tint transition-colors inline-flex items-center" href="#features">
+                            View Scrap Rates
+                        </a>
+</div>
+<!-- Trust Pills -->
+<div class="flex flex-wrap gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Doorstep Pickup
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Live Rates
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> OTP Login
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Order Tracking
+                        </span>
+</div>
+</div>
+<!-- Right Content (Mockup) -->
+<div class="lg:col-span-5 lg:col-start-8 relative mt-16 lg:mt-0 fade-in-up" style="transition-delay: 200ms;">
+<div class="absolute inset-0 bg-[#4CAF6F] opacity-20 blur-[100px] rounded-full"></div>
+<div class="relative w-full max-w-[320px] mx-auto rotate-3 transform hover:rotate-0 transition-transform duration-500">
+<!-- Simulated Phone Frame -->
+<div class="bg-[#16361F] rounded-[40px] p-3 shadow-2xl">
+<div class="bg-surface rounded-[32px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<img src="assets/imgs/home.jpg" alt="SellYourScrap App Home Screen" class="w-full h-full object-cover" />
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-white" id="how-it-works">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="font-sora text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">How It Works</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- connecting line -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-surface-variant -translate-y-1/2 z-0"></div>
+<!-- Step 1 -->
+<div class="tilt-card bg-[#E8F5EC] rounded-2xl relative z-10 fade-in-up stagger-1 border border-surface-variant">
+<div class="tilt-shine"></div>
+<div class="watermark-num">1</div>
+<div class="tilt-card-content p-8 text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">category</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Choose Scrap</h3>
+<p class="font-body-md text-on-surface-variant">Select the types of scrap you want to sell and check the estimated value based on live market rates.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="tilt-card bg-[#E8F5EC] rounded-2xl relative z-10 fade-in-up stagger-2 border border-surface-variant">
+<div class="tilt-shine"></div>
+<div class="watermark-num">2</div>
+<div class="tilt-card-content p-8 text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">event_available</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Book Pickup</h3>
+<p class="font-body-md text-on-surface-variant">Schedule a convenient time for our verified partners to pick up the scrap directly from your doorstep.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="tilt-card bg-[#E8F5EC] rounded-2xl relative z-10 fade-in-up stagger-3 border border-surface-variant">
+<div class="tilt-shine"></div>
+<div class="watermark-num">3</div>
+<div class="tilt-card-content p-8 text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">payments</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Get Paid</h3>
+<p class="font-body-md text-on-surface-variant">Receive payment instantly upon successful pickup and weighing of your scrap materials.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#F4F9F4]" id="features">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16 fade-in-up max-w-2xl">
+<h2 class="font-sora text-headline-lg text-[#16361F] mb-6 clip-mask-wipe">Features Designed for You</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-1 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">home_pin</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Doorstep Pickup</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Conveniently schedule pickups right from your location.</p>
+</div>
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-2 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">currency_rupee</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Live Rates</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Get the best value with real-time scrap market pricing.</p>
+</div>
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-3 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">verified_user</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Secure OTP Login</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Safe and seamless access to your account.</p>
+</div>
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-4 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">timeline</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Order Tracking</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Monitor your pickup status every step of the way.</p>
+</div>
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-5 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">language</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Multilingual Support</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Available in English, Hindi, and Gujarati.</p>
+</div>
+<div class="feature-card bg-white p-8 rounded-2xl fade-in-up stagger-6 border border-outline-variant hover:border-[#4CAF6F] transition-colors duration-200">
+<span class="magnetic-icon material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">account_circle</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Profile Management</h3>
+<p class="font-body-md text-on-surface-variant z-10 relative">Easily manage your addresses and personal details.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Scrap Categories Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-white" id="categories">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="font-sora text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">What We Recycle</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-1 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">newspaper</span>
+<p class="font-body-md font-medium text-[#16361F]">Paper</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-2 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">inventory_2</span>
+<p class="font-body-md font-medium text-[#16361F]">Cardboard</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-3 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">hardware</span>
+<p class="font-body-md font-medium text-[#16361F]">Metal</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-4 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">recycling</span>
+<p class="font-body-md font-medium text-[#16361F]">Plastic</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-5 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">devices</span>
+<p class="font-body-md font-medium text-[#16361F]">E-waste</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-6 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">category</span>
+<p class="font-body-md font-medium text-[#16361F]">Mixed Scrap</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why SellYourScrap Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#16361F] text-white">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16 fade-in-up text-center">
+<h2 class="font-sora text-headline-lg mb-6 clip-mask-wipe text-[#F4F9F4]">Why Choose Us</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">eco</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Eco-Conscious</h3>
+<p class="font-body-md text-[#abd0af]">We ensure your scrap is recycled responsibly, minimizing environmental impact.</p>
+</div>
+<div class="col-span-1 md:col-span-3 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-1 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">groups</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Local Partners</h3>
+<p class="font-body-md text-[#abd0af]">We empower local scrap dealers by connecting them directly with households, creating a more efficient recycling ecosystem in your community.</p>
+</div>
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-2 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">scale</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Accurate Weights</h3>
+<p class="font-body-md text-[#abd0af]">Our partners use digital scales for precise measurements, ensuring you get paid exactly what you're owed.</p>
+</div>
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-3 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">speed</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Fast Processing</h3>
+<p class="font-body-md text-[#abd0af]">From booking to pickup and payment, our process is designed for speed and convenience.</p>
+</div>
+<div class="col-span-1 md:col-span-1 bg-[#4CAF6F] p-8 rounded-2xl fade-in-up stagger-4 flex flex-col justify-center items-center text-center">
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-4">Ready to sell?</h3>
+<a class="px-6 py-3 bg-[#16361F] text-text-on-dark font-label-sm text-label-sm rounded-full hover:bg-white hover:text-[#16361F] transition-colors" href="#">Get Started</a>
+</div>
+</div>
+</div>
+</section>
+<!-- App Screenshots Section (Coverflow) -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#F4F9F4] overflow-hidden" id="screenshots">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-12 fade-in-up">
+<h2 class="font-sora text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">Inside the App</h2>
+</div>
+<div class="relative max-w-5xl mx-auto fade-in-up stagger-1">
+<button class="coverflow-nav-btn coverflow-prev" id="cf-prev">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="coverflow-nav-btn coverflow-next" id="cf-next">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="coverflow-container" id="coverflow">
+<!-- Mockup 1: Homepage -->
+<div class="coverflow-item w-64" data-index="0">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<img src="assets/imgs/home.jpg" alt="Homepage" class="w-full h-full object-cover" />
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Homepage</p>
+</div>
+<!-- Mockup 2: Schedule -->
+<div class="coverflow-item w-64" data-index="1">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<img src="assets/imgs/schedule_pickup.jpg" alt="Schedule Pickup" class="w-full h-full object-cover" />
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Schedule Pickup</p>
+</div>
+<!-- Mockup 3: Rates -->
+<div class="coverflow-item w-64" data-index="2">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<img src="assets/imgs/live_scraprates.jpg" alt="Live Rates" class="w-full h-full object-cover" />
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Live Rates</p>
+</div>
+<!-- Mockup 4: Profile -->
+<div class="coverflow-item w-64" data-index="3">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<img src="assets/imgs/profile_and_orders.jpg" alt="Profile and Orders" class="w-full h-full object-cover" />
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Profile &amp; Orders</p>
+</div>
+</div>
+<div class="coverflow-dots" id="cf-dots">
+<div class="coverflow-dot active" data-index="0"></div>
+<div class="coverflow-dot" data-index="1"></div>
+<div class="coverflow-dot" data-index="2"></div>
+<div class="coverflow-dot" data-index="3"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Privacy and Trust -->
+<section class="py-24 px-grid-margin bg-white border-t border-surface-variant text-center">
+<div class="max-w-3xl mx-auto fade-in-up">
+<span class="material-symbols-outlined text-[#4CAF6F] text-5xl mb-6">shield_locked</span>
+<h2 class="font-sora text-2xl text-[#16361F] mb-4">Your Privacy Matters</h2>
+<p class="font-body-md text-on-surface-variant">We are committed to protecting your personal information. SellYourScrap uses secure OTP authentication and encrypts your data. We never sell your personal details to third parties.</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#0D2416] w-full py-section-gap-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter px-grid-margin max-w-7xl mx-auto text-[#abd0af]">
+<div class="col-span-1 md:col-span-4 mb-12">
+<a href="#" class="inline-block transition-opacity hover:opacity-80">
+<img src="assets/brand-logo.svg" alt="SellYourScrap" class="h-10 w-auto brightness-125" />
+</a>
+</div>
+<div class="md:col-span-2">
+<p class="font-body-md text-body-md text-[#abd0af] max-w-sm">
+                    © 2024 SellYourScrap. Making recycling simple and rewarding for everyone.
+                </p>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">About Us</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Contact</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Delete Account</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
+</div>
+</footer>
+</main>
+<script>
+        // Simple Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    // Trigger child animations if clip-mask is present
+                    const clipMask = entry.target.querySelector('.clip-mask-wipe');
+                    if (clipMask) clipMask.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up, .clip-mask-wipe').forEach((el) => observer.observe(el));
+        
+        // Navbar scroll effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 1. 3D Tilt Cards
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            const watermark = card.querySelector('.watermark-num');
+            
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+                
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+                
+                if (watermark) {
+                    watermark.style.transform = `translate(${rotateY * -0.3}px, ${rotateX * 0.3}px)`;
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+                card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                if (watermark) watermark.style.transform = 'translate(0, 0)';
+                
+                setTimeout(() => {
+                    card.style.transition = '';
+                }, 500);
+            });
+        });
+
+        // 2. Magnetic Icons
+        document.querySelectorAll('.feature-card').forEach(card => {
+            const icon = card.querySelector('.magnetic-icon');
+            
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const moveX = ((x - centerX) / centerX) * 6;
+                const moveY = ((y - centerY) / centerY) * 6;
+                
+                icon.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                icon.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // 3. Draggable Chips
+        const chipContainer = document.getElementById('chip-container');
+        const chips = document.querySelectorAll('.draggable-chip');
+        const dragHint = document.getElementById('drag-hint');
+        let hintFaded = false;
+
+        // Initial organic layout
+        const distributeChips = () => {
+            const containerWidth = chipContainer.offsetWidth;
+            const containerHeight = chipContainer.offsetHeight;
+            const centerX = containerWidth / 2;
+            const centerY = containerHeight / 2;
+
+            chips.forEach((chip, i) => {
+                // Determine a base circle position, then add random jitter
+                const angle = (i / chips.length) * Math.PI * 2;
+                const radius = 100 + (Math.random() * 20 - 10);
+                
+                const baseX = centerX + Math.cos(angle) * radius;
+                const baseY = centerY + Math.sin(angle) * radius * 0.6; // Elliptical spread
+                
+                const jitterX = Math.random() * 40 - 20;
+                const jitterY = Math.random() * 40 - 20;
+
+                const finalX = baseX + jitterX - (chip.offsetWidth / 2);
+                const finalY = baseY + jitterY - (chip.offsetHeight / 2);
+
+                chip.style.left = `${finalX}px`;
+                chip.style.top = `${finalY}px`;
+                
+                // Add staggered enter animation delay
+                chip.style.animationDelay = `${i * 0.1}s`;
+            });
+        };
+
+        // Call after a slight delay to ensure layout is computed
+        setTimeout(distributeChips, 100);
+        window.addEventListener('resize', distributeChips);
+
+        let activeChip = null;
+        let startX, startY, initialLeft, initialTop;
+
+        chips.forEach(chip => {
+            chip.addEventListener('pointerdown', (e) => {
+                activeChip = chip;
+                startX = e.clientX;
+                startY = e.clientY;
+                initialLeft = parseFloat(chip.style.left) || 0;
+                initialTop = parseFloat(chip.style.top) || 0;
+                chip.setPointerCapture(e.pointerId);
+                
+                // Fade hint
+                if (!hintFaded) {
+                    dragHint.style.opacity = '0';
+                    hintFaded = true;
+                }
+            });
+
+            chip.addEventListener('pointermove', (e) => {
+                if (activeChip !== chip) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                chip.style.left = `${initialLeft + dx}px`;
+                chip.style.top = `${initialTop + dy}px`;
+            });
+
+            chip.addEventListener('pointerup', (e) => {
+                if (activeChip === chip) {
+                    chip.releasePointerCapture(e.pointerId);
+                    activeChip = null;
+                }
+            });
+            chip.addEventListener('pointercancel', () => activeChip = null);
+        });
+
+        // 4. Coverflow Carousel
+        const cfItems = document.querySelectorAll('.coverflow-item');
+        const cfDots = document.querySelectorAll('.coverflow-dot');
+        const cfPrev = document.getElementById('cf-prev');
+        const cfNext = document.getElementById('cf-next');
+        const cfContainer = document.getElementById('coverflow');
+        
+        let currentIndex = 0;
+        const totalItems = cfItems.length;
+
+        function updateCoverflow() {
+            cfItems.forEach((item, index) => {
+                const diff = index - currentIndex;
+                
+                // Center item
+                if (diff === 0) {
+                    item.style.transform = 'translateX(0) scale(1) rotateY(0deg)';
+                    item.style.opacity = '1';
+                    item.style.zIndex = '10';
+                } 
+                // Flanking right
+                else if (diff > 0) {
+                    item.style.transform = `translateX(${150 + (diff * 40)}px) scale(0.82) rotateY(-35deg)`;
+                    item.style.opacity = diff === 1 ? '0.7' : '0';
+                    item.style.zIndex = 10 - diff;
+                } 
+                // Flanking left
+                else {
+                    item.style.transform = `translateX(${-150 + (diff * 40)}px) scale(0.82) rotateY(35deg)`;
+                    item.style.opacity = diff === -1 ? '0.7' : '0';
+                    item.style.zIndex = 10 + diff;
+                }
+            });
+
+            cfDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        cfPrev.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCoverflow();
+            }
+        });
+
+        cfNext.addEventListener('click', () => {
+            if (currentIndex < totalItems - 1) {
+                currentIndex++;
+                updateCoverflow();
+            }
+        });
+
+        cfItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateCoverflow();
+            });
+        });
+
+        cfDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCoverflow();
+            });
+        });
+
+        // Basic swipe/drag for coverflow
+        let cfStartX = 0;
+        let isDraggingCf = false;
+
+        cfContainer.addEventListener('pointerdown', (e) => {
+            // Ignore if clicking a button
+            if (e.target.closest('.coverflow-nav-btn')) return;
+            isDraggingCf = true;
+            cfStartX = e.clientX;
+        });
+
+        window.addEventListener('pointerup', (e) => {
+            if (!isDraggingCf) return;
+            isDraggingCf = false;
+            const diffX = e.clientX - cfStartX;
+            
+            if (diffX > 50 && currentIndex > 0) {
+                currentIndex--;
+                updateCoverflow();
+            } else if (diffX < -50 && currentIndex < totalItems - 1) {
+                currentIndex++;
+                updateCoverflow();
+            }
+        });
+
+        // Initialize coverflow
+        setTimeout(updateCoverflow, 100);
+
+    </script>
+</body></html>

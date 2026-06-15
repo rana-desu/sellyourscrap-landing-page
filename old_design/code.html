@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SellYourScrap - Doorstep Scrap Pickup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#22723d",
+                      "surface-container-high": "#e4e9e5",
+                      "secondary-fixed": "#a3f5b2",
+                      "primary-fixed": "#c6ecca",
+                      "on-surface": "#171d1a",
+                      "on-secondary-fixed-variant": "#005225",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#a3f5b2",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#f6fbf6",
+                      "on-error": "#ffffff",
+                      "background": "#f6fbf6",
+                      "on-primary-container": "#7da082",
+                      "primary-fixed-dim": "#abd0af",
+                      "on-tertiary-fixed": "#00210d",
+                      "on-primary-fixed": "#01210c",
+                      "on-secondary-fixed": "#00210b",
+                      "secondary": "#1a6c37",
+                      "text-on-dark": "#F4F9F4",
+                      "surface-dim": "#d6dbd7",
+                      "tertiary-container": "#00381a",
+                      "on-tertiary-container": "#46aa6a",
+                      "surface-tint": "#E8F5EC",
+                      "on-surface-variant": "#424842",
+                      "text-on-light": "#1A1A1A",
+                      "inverse-surface": "#2c322f",
+                      "tertiary-fixed": "#94f8b0",
+                      "on-primary-fixed-variant": "#2e4e35",
+                      "on-background": "#171d1a",
+                      "primary": "#01200c",
+                      "secondary-fixed-dim": "#88d898",
+                      "error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c2c8bf",
+                      "outline": "#727971",
+                      "inverse-on-surface": "#edf2ed",
+                      "on-secondary": "#ffffff",
+                      "surface-container": "#eaefea",
+                      "surface-bright": "#f6fbf6",
+                      "surface-variant": "#dfe4df",
+                      "surface-container-highest": "#dfe4df",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#abd0af",
+                      "surface-container-low": "#f0f5f0",
+                      "tertiary-fixed-dim": "#78db96",
+                      "on-tertiary-fixed-variant": "#00522a",
+                      "tertiary": "#00200d",
+                      "primary-container": "#16361f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "section-gap-mobile": "80px",
+                      "grid-margin": "40px",
+                      "section-gap-desktop": "160px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter", "sans-serif"],
+                      "label-sm": ["Inter", "sans-serif"],
+                      "headline-md": ["Playfair Display", "serif"],
+                      "display-hero-mobile": ["Playfair Display", "serif"],
+                      "headline-lg": ["Playfair Display", "serif"],
+                      "display-hero": ["Playfair Display", "serif"],
+                      "body-md": ["Inter", "sans-serif"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["13px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-hero-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-hero": ["84px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+          font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Scroll Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+        .stagger-5 { transition-delay: 500ms; }
+        .stagger-6 { transition-delay: 600ms; }
+
+        .nav-scrolled {
+            background-color: rgba(1, 32, 12, 0.95); /* primary color */
+            backdrop-filter: blur(10px);
+            color: #ffffff; /* Override text color on scroll */
+        }
+        .nav-scrolled .nav-link, .nav-scrolled .brand-logo {
+             color: #F4F9F4 !important;
+        }
+
+        .clip-mask-wipe {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+            transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .clip-mask-wipe.is-visible {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 transition-all duration-300 py-4 bg-transparent text-on-surface" id="mainNav">
+<div class="flex justify-between items-center w-full px-grid-margin max-w-7xl mx-auto">
+<a class="brand-logo font-headline-md text-headline-md font-bold text-primary transition-colors" href="#">SellYourScrap</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#how-it-works">How It Works</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#features">Features</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#categories">Categories</a>
+<a class="nav-link text-on-surface font-body-md hover:text-[#4CAF6F] transition-colors duration-200" href="#screenshots">App</a>
+</div>
+<a class="hidden md:inline-flex px-6 py-3 bg-[#16361F] text-text-on-dark font-label-sm text-label-sm rounded-full hover:bg-[#4CAF6F] transition-colors items-center gap-2" href="#">
+                Download App
+            </a>
+<!-- Mobile Menu Button (Simplified for this exercise) -->
+<button class="md:hidden text-primary nav-link">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[921px] pt-32 pb-section-gap-mobile md:pb-section-gap-desktop px-grid-margin overflow-hidden flex items-center bg-[#F4F9F4]">
+<!-- Decorative Background Elements -->
+<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-surface-tint rounded-full opacity-50 blur-3xl -translate-y-1/4 translate-x-1/4 -z-10"></div>
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Content -->
+<div class="lg:col-span-6 z-10 fade-in-up">
+<h1 class="font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-[#16361F] mb-6 leading-tight">
+                        Sell Scrap From Your Doorstep
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-lg">
+                        Check live scrap rates, book a pickup, and track your recycling order with SellYourScrap. Reliable, local, and eco-conscious.
+                    </p>
+<div class="flex flex-wrap gap-4 mb-12">
+<a class="px-8 py-4 bg-[#4CAF6F] text-[#F4F9F4] font-label-sm text-label-sm rounded-full hover:bg-[#16361F] transition-colors inline-flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">android</span>
+                            Download App
+                        </a>
+<a class="px-8 py-4 border-2 border-primary-container text-primary-container font-label-sm text-label-sm rounded-full hover:bg-surface-tint transition-colors inline-flex items-center" href="#features">
+                            View Scrap Rates
+                        </a>
+</div>
+<!-- Trust Pills -->
+<div class="flex flex-wrap gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Doorstep Pickup
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Live Rates
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> OTP Login
+                        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-full text-sm text-on-surface-variant shadow-sm border border-surface-variant">
+<span class="text-[#4CAF6F] material-symbols-outlined fill text-[18px]">check_circle</span> Order Tracking
+                        </span>
+</div>
+</div>
+<!-- Right Content (Mockup) -->
+<div class="lg:col-span-5 lg:col-start-8 relative mt-16 lg:mt-0 fade-in-up" style="transition-delay: 200ms;">
+<div class="absolute inset-0 bg-[#4CAF6F] opacity-20 blur-[100px] rounded-full"></div>
+<div class="relative w-full max-w-[320px] mx-auto rotate-3 transform hover:rotate-0 transition-transform duration-500">
+<!-- Simulated Phone Frame -->
+<div class="bg-[#16361F] rounded-[40px] p-3 shadow-2xl">
+<div class="bg-surface rounded-[32px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<!-- App Interface Mockup -->
+<div class="bg-[#16361F] text-white p-6 pt-12 pb-8">
+<h3 class="font-headline-md text-xl mb-2">Hello, Recycler</h3>
+<p class="text-sm opacity-80">Ready to clear some space?</p>
+</div>
+<div class="p-4 bg-white -mt-4 rounded-t-xl h-full shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<div class="bg-surface-tint p-4 rounded-xl mb-4 flex justify-between items-center">
+<div>
+<p class="text-xs text-on-surface-variant">Live Rates</p>
+<p class="font-bold text-[#16361F]">Updated Today</p>
+</div>
+<span class="material-symbols-outlined text-[#4CAF6F]">trending_up</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="border border-surface-variant p-3 rounded-lg text-center"><span class="material-symbols-outlined mb-1 text-on-surface-variant">newspaper</span><p class="text-xs font-bold text-[#16361F]">Paper</p></div>
+<div class="border border-surface-variant p-3 rounded-lg text-center"><span class="material-symbols-outlined mb-1 text-on-surface-variant">local_shipping</span><p class="text-xs font-bold text-[#16361F]">Metal</p></div>
+</div>
+<button class="w-full mt-6 py-3 bg-[#4CAF6F] text-white rounded-full text-sm font-bold">Book Pickup</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-white" id="how-it-works">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="font-headline-lg text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">How It Works</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- connecting line -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-surface-variant -translate-y-1/2 z-0"></div>
+<div class="bg-surface-tint p-8 rounded-2xl relative z-10 fade-in-up stagger-1 border border-surface-variant text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">category</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Choose Scrap</h3>
+<p class="font-body-md text-on-surface-variant">Select the types of scrap you want to sell and check the estimated value based on live market rates.</p>
+</div>
+<div class="bg-surface-tint p-8 rounded-2xl relative z-10 fade-in-up stagger-2 border border-surface-variant text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">event_available</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Book Pickup</h3>
+<p class="font-body-md text-on-surface-variant">Schedule a convenient time for our verified partners to pick up the scrap directly from your doorstep.</p>
+</div>
+<div class="bg-surface-tint p-8 rounded-2xl relative z-10 fade-in-up stagger-3 border border-surface-variant text-center">
+<div class="w-16 h-16 bg-[#4CAF6F] text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+<span class="material-symbols-outlined text-3xl">payments</span>
+</div>
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-3">Get Paid</h3>
+<p class="font-body-md text-on-surface-variant">Receive payment instantly upon successful pickup and weighing of your scrap materials.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#F4F9F4]" id="features">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16 fade-in-up max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg text-[#16361F] mb-6 clip-mask-wipe">Features Designed for You</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-1 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">home_pin</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Doorstep Pickup</h3>
+<p class="font-body-md text-on-surface-variant">Conveniently schedule pickups right from your location.</p>
+</div>
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-2 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">currency_rupee</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Live Rates</h3>
+<p class="font-body-md text-on-surface-variant">Get the best value with real-time scrap market pricing.</p>
+</div>
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-3 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">verified_user</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Secure OTP Login</h3>
+<p class="font-body-md text-on-surface-variant">Safe and seamless access to your account.</p>
+</div>
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-4 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">timeline</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Order Tracking</h3>
+<p class="font-body-md text-on-surface-variant">Monitor your pickup status every step of the way.</p>
+</div>
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-5 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">language</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Multilingual Support</h3>
+<p class="font-body-md text-on-surface-variant">Available in English, Hindi, and Gujarati.</p>
+</div>
+<div class="bg-white p-8 rounded-2xl fade-in-up stagger-6 border border-outline-variant hover:border-[#4CAF6F] transition-colors">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">account_circle</span>
+<h3 class="font-headline-md text-xl text-[#16361F] mb-2">Profile Management</h3>
+<p class="font-body-md text-on-surface-variant">Easily manage your addresses and personal details.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Scrap Categories Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-white" id="categories">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="font-headline-lg text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">What We Recycle</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-1 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">newspaper</span>
+<p class="font-body-md font-medium text-[#16361F]">Paper</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-2 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">inventory_2</span>
+<p class="font-body-md font-medium text-[#16361F]">Cardboard</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-3 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">hardware</span>
+<p class="font-body-md font-medium text-[#16361F]">Metal</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-4 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">recycling</span>
+<p class="font-body-md font-medium text-[#16361F]">Plastic</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-5 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">devices</span>
+<p class="font-body-md font-medium text-[#16361F]">E-waste</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl text-center fade-in-up stagger-6 border border-outline-variant hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-3">category</span>
+<p class="font-body-md font-medium text-[#16361F]">Mixed Scrap</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why SellYourScrap Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#16361F] text-white">
+<div class="max-w-7xl mx-auto">
+<div class="mb-16 fade-in-up text-center">
+<h2 class="font-headline-lg text-headline-lg mb-6 clip-mask-wipe text-[#F4F9F4]">Why Choose Us</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">eco</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Eco-Conscious</h3>
+<p class="font-body-md text-[#abd0af]">We ensure your scrap is recycled responsibly, minimizing environmental impact.</p>
+</div>
+<div class="col-span-1 md:col-span-3 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-1 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">groups</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Local Partners</h3>
+<p class="font-body-md text-[#abd0af]">We empower local scrap dealers by connecting them directly with households, creating a more efficient recycling ecosystem in your community.</p>
+</div>
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-2 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">scale</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Accurate Weights</h3>
+<p class="font-body-md text-[#abd0af]">Our partners use digital scales for precise measurements, ensuring you get paid exactly what you're owed.</p>
+</div>
+<div class="col-span-1 md:col-span-2 bg-[#0D2416] p-8 rounded-2xl fade-in-up stagger-3 border border-[#2e4e35]">
+<span class="material-symbols-outlined text-[#4CAF6F] text-4xl mb-4">speed</span>
+<h3 class="font-headline-md text-xl text-[#F4F9F4] mb-3">Fast Processing</h3>
+<p class="font-body-md text-[#abd0af]">From booking to pickup and payment, our process is designed for speed and convenience.</p>
+</div>
+<div class="col-span-1 md:col-span-1 bg-[#4CAF6F] p-8 rounded-2xl fade-in-up stagger-4 flex flex-col justify-center items-center text-center">
+<h3 class="font-headline-md text-2xl text-[#16361F] mb-4">Ready to sell?</h3>
+<a class="px-6 py-3 bg-[#16361F] text-text-on-dark font-label-sm text-label-sm rounded-full hover:bg-white hover:text-[#16361F] transition-colors" href="#">Get Started</a>
+</div>
+</div>
+</div>
+</section>
+<!-- App Screenshots Section -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop px-grid-margin bg-[#F4F9F4] overflow-hidden" id="screenshots">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 fade-in-up">
+<h2 class="font-headline-lg text-headline-lg text-[#16361F] mb-4 clip-mask-wipe">Inside the App</h2>
+</div>
+<div class="flex flex-wrap justify-center gap-8 lg:gap-12">
+<!-- Mockup 1: Homepage -->
+<div class="w-64 relative fade-in-up stagger-1 transform hover:-translate-y-4 transition-transform duration-500">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<div class="bg-[#16361F] text-white p-4 pt-8">
+<p class="text-sm">Welcome back</p>
+</div>
+<div class="p-4 bg-white -mt-2 rounded-t-xl h-full shadow-inner">
+<div class="w-full h-24 bg-surface-tint rounded-xl mb-4"></div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="w-full h-20 bg-surface rounded-lg border border-outline-variant"></div>
+<div class="w-full h-20 bg-surface rounded-lg border border-outline-variant"></div>
+</div>
+<div class="w-full h-10 bg-[#4CAF6F] rounded-full mt-auto"></div>
+</div>
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Homepage</p>
+</div>
+<!-- Mockup 2: Schedule -->
+<div class="w-64 relative fade-in-up stagger-2 transform hover:-translate-y-4 transition-transform duration-500 lg:mt-12">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<div class="bg-white p-4 pt-8 border-b border-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[#16361F]">arrow_back</span>
+<p class="font-medium text-[#16361F]">Schedule Pickup</p>
+</div>
+<div class="p-4 h-full bg-surface">
+<div class="w-full h-16 bg-white rounded-xl border border-outline-variant mb-4 flex items-center px-4"><div class="w-8 h-8 rounded-full bg-surface-tint mr-3"></div><div class="w-24 h-2 bg-surface-dim rounded"></div></div>
+<div class="w-full h-32 bg-white rounded-xl border border-outline-variant mb-4"></div>
+<div class="w-full h-10 bg-[#4CAF6F] rounded-full mt-auto"></div>
+</div>
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Schedule Pickup</p>
+</div>
+<!-- Mockup 3: Rates -->
+<div class="w-64 relative fade-in-up stagger-3 transform hover:-translate-y-4 transition-transform duration-500">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<div class="bg-[#4CAF6F] p-4 pt-8 text-white">
+<p class="font-medium">Live Rates</p>
+</div>
+<div class="p-4 h-full bg-white -mt-2 rounded-t-xl">
+<div class="w-full h-12 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+<div class="w-full h-12 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+<div class="w-full h-12 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+<div class="w-full h-12 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+</div>
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Live Rates</p>
+</div>
+<!-- Mockup 4: Profile -->
+<div class="w-64 relative fade-in-up stagger-4 transform hover:-translate-y-4 transition-transform duration-500 lg:mt-12">
+<div class="bg-[#16361F] rounded-[36px] p-2 shadow-xl border-4 border-[#16361F]">
+<div class="bg-surface rounded-[28px] overflow-hidden aspect-[9/19] relative border border-outline-variant">
+<div class="p-4 pt-12 pb-8 bg-surface-tint text-center border-b border-surface-variant">
+<div class="w-16 h-16 rounded-full bg-white mx-auto mb-2 border-2 border-[#4CAF6F]"></div>
+<div class="w-20 h-3 bg-[#16361F] rounded mx-auto mb-1"></div>
+<div class="w-16 h-2 bg-outline rounded mx-auto"></div>
+</div>
+<div class="p-4 h-full bg-white">
+<div class="w-full h-10 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+<div class="w-full h-10 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+<div class="w-full h-10 bg-surface rounded-lg border border-outline-variant mb-2"></div>
+</div>
+</div>
+</div>
+<p class="text-center mt-6 font-body-md font-medium text-[#16361F]">Profile &amp; Orders</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Privacy and Trust -->
+<section class="py-24 px-grid-margin bg-white border-t border-surface-variant text-center">
+<div class="max-w-3xl mx-auto fade-in-up">
+<span class="material-symbols-outlined text-[#4CAF6F] text-5xl mb-6">shield_locked</span>
+<h2 class="font-headline-md text-2xl text-[#16361F] mb-4">Your Privacy Matters</h2>
+<p class="font-body-md text-on-surface-variant">We are committed to protecting your personal information. SellYourScrap uses secure OTP authentication and encrypts your data. We never sell your personal details to third parties.</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#0D2416] w-full py-section-gap-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter px-grid-margin max-w-7xl mx-auto text-[#abd0af]">
+<div class="col-span-1 md:col-span-4 mb-12">
+<p class="font-headline-md text-headline-md font-bold text-[#F4F9F4]">SellYourScrap</p>
+</div>
+<div class="md:col-span-2">
+<p class="font-body-md text-body-md text-[#abd0af] max-w-sm">
+                    © 2024 SellYourScrap. Making recycling simple and rewarding for everyone.
+                </p>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">About Us</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Contact</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="#">Delete Account</a>
+<a class="font-body-md text-body-md text-[#abd0af] hover:text-[#4CAF6F] transition-colors" href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
+</div>
+</footer>
+</main>
+<script>
+        // Simple Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    // Trigger child animations if clip-mask is present
+                    const clipMask = entry.target.querySelector('.clip-mask-wipe');
+                    if (clipMask) clipMask.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up, .clip-mask-wipe').forEach((el) => observer.observe(el));
+        
+        // Navbar scroll effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+    </script>
+</body></html>
