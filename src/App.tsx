@@ -1,6 +1,4 @@
 import {
-  ArrowLeft,
-  ArrowRight,
   Boxes,
   CalendarCheck,
   CheckCircle2,
@@ -25,7 +23,6 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import {
-  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useEffect,
@@ -98,22 +95,34 @@ const categories: Array<{ icon: IconType; label: string }> = [
   { icon: Boxes, label: 'Mixed Scrap' },
 ]
 
-const screens = [
-  { src: '/assets/imgs/home.jpg', alt: 'SellYourScrap app home screen', label: 'Homepage' },
+const appJourneySteps = [
   {
-    src: '/assets/imgs/schedule_pickup.jpg',
-    alt: 'SellYourScrap schedule pickup screen',
-    label: 'Schedule Pickup',
+    src: '/assets/imgs/home.jpg',
+    alt: 'SellYourScrap Android app home dashboard screen',
+    label: 'Home',
+    title: 'Start from your dashboard',
+    body: 'View pickup shortcuts, earnings, active requests, and quick actions from one clean home screen.',
   },
   {
     src: '/assets/imgs/live_scraprates.jpg',
-    alt: 'SellYourScrap scrap rates screen',
-    label: 'Scrap Rates',
+    alt: 'SellYourScrap Android app live scrap rates screen',
+    label: 'Live Scrap Rates',
+    title: 'Check rates before pickup',
+    body: 'Preview material-wise scrap rates before creating a pickup request.',
+  },
+  {
+    src: '/assets/imgs/schedule_pickup.jpg',
+    alt: 'SellYourScrap Android app schedule pickup screen',
+    label: 'Schedule Pickup',
+    title: 'Book pickup in a few taps',
+    body: 'Choose scrap category, address, date, and preferred pickup time from the app.',
   },
   {
     src: '/assets/imgs/profile_and_orders.jpg',
-    alt: 'SellYourScrap profile and orders screen',
+    alt: 'SellYourScrap Android app profile and orders screen',
     label: 'Profile & Orders',
+    title: 'Track orders and history',
+    body: 'Review previous pickups, profile details, and request status from your account area.',
   },
 ]
 
@@ -219,7 +228,7 @@ function Hero() {
         </div>
         <div className="hero-visual reveal delay-2">
           <div className="phone-glow" />
-          <PhoneMockup src="/assets/imgs/home.jpg" alt="SellYourScrap Android app home screen" hero />
+          <AndroidPhoneFrame src="/assets/imgs/home.jpg" alt="SellYourScrap Android app home screen" hero />
           <div className="floating-card floating-card-top">
             <span className="floating-icon"><TrendingUp size={18} /></span>
             <span><strong>Check rates</strong><small>Before you schedule</small></span>
@@ -351,10 +360,39 @@ function BuiltForTrust() {
 
 function AppScreens() {
   const [active, setActive] = useState(0)
+  const stepRefs = useRef<Array<HTMLElement | null>>([])
   const startX = useRef<number | null>(null)
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleEntry) {
+          const index = Number((visibleEntry.target as HTMLElement).dataset.stepIndex)
+          setActive(index)
+        }
+      },
+      {
+        rootMargin: '-38% 0px -38% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      },
+    )
+
+    stepRefs.current.forEach((step) => {
+      if (step) observer.observe(step)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
   const previous = () => setActive((current) => Math.max(0, current - 1))
-  const next = () => setActive((current) => Math.min(screens.length - 1, current + 1))
+  const next = () => setActive((current) => Math.min(appJourneySteps.length - 1, current + 1))
 
   const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (startX.current === null) return
@@ -365,72 +403,82 @@ function AppScreens() {
   }
 
   return (
-    <section className="section screens-section" id="screenshots">
+    <section className="section app-journey-section" id="screenshots">
       <div className="container">
         <SectionHeading
           kicker="Inside SellYourScrap"
           title="See the app before you download"
-          body="Swipe through the core screens for rates, pickups, and order tracking."
+          body="Explore the core screens for rates, pickups, tracking, and order history."
           centered
         />
-        <div className="coverflow reveal delay-1">
-          <button
-            className="carousel-button previous"
-            type="button"
-            aria-label="Previous app screen"
-            disabled={active === 0}
-            onClick={previous}
-          >
-            <ArrowLeft />
-          </button>
-          <div
-            className="coverflow-stage"
-            onPointerDown={(event) => {
-              startX.current = event.clientX
-            }}
-            onPointerUp={onPointerUp}
-            onPointerCancel={() => {
-              startX.current = null
-            }}
-          >
-            {screens.map((screen, index) => {
-              const difference = index - active
-              return (
-                <button
-                  className={`screen-item ${difference === 0 ? 'is-active' : ''}`}
-                  style={{ '--difference': difference } as CSSProperties}
-                  key={screen.label}
-                  type="button"
-                  aria-label={`Show ${screen.label} screen`}
-                  aria-current={difference === 0}
-                  onClick={() => setActive(index)}
-                >
-                  <PhoneMockup src={screen.src} alt={screen.alt} />
-                  <span>{screen.label}</span>
-                </button>
-              )
-            })}
-          </div>
-          <button
-            className="carousel-button next"
-            type="button"
-            aria-label="Next app screen"
-            disabled={active === screens.length - 1}
-            onClick={next}
-          >
-            <ArrowRight />
-          </button>
-          <div className="carousel-dots" aria-label="Choose app screen">
-            {screens.map((screen, index) => (
-              <button
-                type="button"
-                className={active === index ? 'is-active' : ''}
-                aria-label={`Show ${screen.label}`}
-                aria-current={active === index}
-                onClick={() => setActive(index)}
-                key={screen.label}
-              />
+        <div className="app-journey-desktop reveal delay-1">
+          <div className="journey-steps" aria-label="SellYourScrap app journey steps">
+            {appJourneySteps.map((step, index) => (
+              <article
+                className={`journey-step ${active === index ? 'is-active' : ''}`}
+                data-step-index={index}
+                ref={(element) => {
+                  stepRefs.current[index] = element
+                }}
+                key={step.label}
+              >
+                <span className="journey-progress">{index + 1}/4</span>
+                <p>{step.label}</p>
+                <h3>{step.title}</h3>
+                <span>{step.body}</span>
+              </article>
             ))}
+          </div>
+          <div className="journey-phone-sticky" aria-live="polite">
+            <div className="journey-phone-shell">
+              <AndroidPhoneFrame steps={appJourneySteps} activeIndex={active} />
+              <div className="journey-progress-card">
+                <span>{active + 1}/4</span>
+                <strong>{appJourneySteps[active].label}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="app-journey-mobile reveal delay-1">
+          <div className="mobile-journey-card">
+            <div
+              className="mobile-phone-swipe"
+              onPointerDown={(event) => {
+                startX.current = event.clientX
+              }}
+              onPointerUp={onPointerUp}
+              onPointerCancel={() => {
+                startX.current = null
+              }}
+            >
+              <AndroidPhoneFrame steps={appJourneySteps} activeIndex={active} compact />
+            </div>
+            <div className="mobile-step-copy">
+              <span>{active + 1}/4</span>
+              <p>{appJourneySteps[active].label}</p>
+              <h3>{appJourneySteps[active].title}</h3>
+              <p>{appJourneySteps[active].body}</p>
+            </div>
+            <div className="mobile-step-controls">
+              <button type="button" onClick={previous} disabled={active === 0}>
+                Previous
+              </button>
+              <div className="mobile-journey-dots" aria-label="Choose app journey screen">
+                {appJourneySteps.map((step, index) => (
+                  <button
+                    type="button"
+                    className={active === index ? 'is-active' : ''}
+                    aria-label={`Show ${step.label}`}
+                    aria-current={active === index}
+                    onClick={() => setActive(index)}
+                    key={step.label}
+                  />
+                ))}
+              </div>
+              <button type="button" onClick={next} disabled={active === appJourneySteps.length - 1}>
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -571,19 +619,39 @@ function TrustCard({
   )
 }
 
-function PhoneMockup({
+function AndroidPhoneFrame({
   src,
   alt,
+  steps,
+  activeIndex = 0,
   hero = false,
+  compact = false,
 }: {
-  src: string
-  alt: string
+  src?: string
+  alt?: string
+  steps?: typeof appJourneySteps
+  activeIndex?: number
   hero?: boolean
+  compact?: boolean
 }) {
+  const screenshots = steps ?? (src && alt ? [{ src, alt, label: '', title: '', body: '' }] : [])
+
   return (
-    <div className={`phone ${hero ? 'phone-hero' : ''}`}>
-      <div className="phone-speaker" />
-      <img src={src} alt={alt} />
+    <div className={`android-phone ${hero ? 'phone-hero' : ''} ${compact ? 'phone-compact' : ''}`}>
+      <div className="android-status-bar" aria-hidden="true">
+        <span />
+        <span />
+      </div>
+      <div className="android-screen">
+        {screenshots.map((screen, index) => (
+          <img
+            className={index === activeIndex ? 'is-active' : ''}
+            src={screen.src}
+            alt={screen.alt}
+            key={screen.src}
+          />
+        ))}
+      </div>
     </div>
   )
 }
