@@ -1,4 +1,5 @@
 import {
+  AlertTriangle,
   Boxes,
   CalendarCheck,
   CheckCircle2,
@@ -29,6 +30,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 
 const PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=sellyourscrap.in'
@@ -127,24 +129,63 @@ const appJourneySteps = [
 ]
 
 function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToRoute />
+      <SiteShell>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/delete-account" element={<DeleteAccountPage />} />
+        </Routes>
+      </SiteShell>
+    </BrowserRouter>
+  )
+}
+
+function HomePage() {
   useRevealAnimations()
 
   return (
     <>
+      <Hero />
+      <HowItWorks />
+      <WhyDownload />
+      <ScrapCategories />
+      <BuiltForTrust />
+      <AppScreens />
+      <Privacy />
+      <FinalCTA />
+    </>
+  )
+}
+
+function SiteShell({ children }: { children: ReactNode }) {
+  return (
+    <>
       <Header />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <WhyDownload />
-        <ScrapCategories />
-        <BuiltForTrust />
-        <AppScreens />
-        <Privacy />
-        <FinalCTA />
-      </main>
+      <main>{children}</main>
       <Footer />
     </>
   )
+}
+
+function ScrollToRoute() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      window.setTimeout(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 0)
+      return
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [pathname, hash])
+
+  return null
 }
 
 function Header() {
@@ -163,14 +204,14 @@ function Header() {
   return (
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="header-inner">
-        <a className="brand" href="#top" aria-label="SellYourScrap home" onClick={closeMenu}>
+        <Link className="brand" to="/" aria-label="SellYourScrap home" onClick={closeMenu}>
           <img src="/assets/brand-logo.svg" alt="SellYourScrap" />
-        </a>
+        </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#how-it-works">How It Works</a>
-          <a href="#features">Features</a>
-          <a href="#categories">Categories</a>
-          <a href="#screenshots">App</a>
+          <Link to="/#how-it-works">How It Works</Link>
+          <Link to="/#features">Features</Link>
+          <Link to="/#categories">Categories</Link>
+          <Link to="/#screenshots">App</Link>
         </nav>
         <a className="button button-dark header-cta" href={PLAY_STORE_URL}>
           Download App
@@ -186,10 +227,10 @@ function Header() {
         </button>
       </div>
       <nav className={`mobile-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Mobile navigation">
-        <a href="#how-it-works" onClick={closeMenu}>How It Works</a>
-        <a href="#features" onClick={closeMenu}>Features</a>
-        <a href="#categories" onClick={closeMenu}>Categories</a>
-        <a href="#screenshots" onClick={closeMenu}>App Preview</a>
+        <Link to="/#how-it-works" onClick={closeMenu}>How It Works</Link>
+        <Link to="/#features" onClick={closeMenu}>Features</Link>
+        <Link to="/#categories" onClick={closeMenu}>Categories</Link>
+        <Link to="/#screenshots" onClick={closeMenu}>App Preview</Link>
         <a className="button button-green" href={PLAY_STORE_URL} onClick={closeMenu}>Download App</a>
       </nav>
     </header>
@@ -523,21 +564,27 @@ function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <a href="#top" aria-label="SellYourScrap home"><img src="/assets/brand-logo.svg" alt="SellYourScrap" /></a>
+          <Link to="/" aria-label="SellYourScrap home"><img src="/assets/brand-logo.svg" alt="SellYourScrap" /></Link>
           <p>Built for simple, transparent scrap pickup from your phone.</p>
           <span>Currently focused on Android.</span>
         </div>
         <div>
           <h3>Explore</h3>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#features">Features</a>
-          <a href="#categories">Categories</a>
-          <a href="#screenshots">App Preview</a>
+          <Link to="/#how-it-works">How It Works</Link>
+          <Link to="/#features">Features</Link>
+          <Link to="/#categories">Categories</Link>
+          <Link to="/#screenshots">App Preview</Link>
         </div>
         <div>
           <h3>Support</h3>
           <a href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
           <a href={PLAY_STORE_URL}>Download App</a>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms of Service</Link>
+          <Link to="/delete-account">Delete Account</Link>
         </div>
       </div>
       <div className="container footer-bottom">
@@ -546,6 +593,421 @@ function Footer() {
       </div>
     </footer>
   )
+}
+
+function PrivacyPolicyPage() {
+  usePageMetadata(
+    'Privacy Policy | SellYourScrap',
+    'Learn how SellYourScrap collects, uses, and protects information in the Android app.',
+  )
+
+  return (
+    <LegalPageLayout title="Privacy Policy">
+      <LegalSection title="Introduction">
+        <p>
+          SellYourScrap (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
+          This Privacy Policy explains how we collect, use, and safeguard your personal information
+          when you use our mobile application.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Information We Collect">
+        <p>We collect the following types of information:</p>
+        <ul>
+          <li>Phone number for OTP login and account verification</li>
+          <li>Name and country for your profile</li>
+          <li>Address details for coordinating doorstep pickup</li>
+          <li>
+            Pickup details including scrap category, estimated weight, preferred date and time,
+            and special notes
+          </li>
+          <li>Order status and pickup history</li>
+          <li>Optional profile photo if you choose to upload one</li>
+          <li>Basic device and app diagnostics for security and crash fixing purposes</li>
+        </ul>
+      </LegalSection>
+
+      <LegalSection title="How We Use Your Information">
+        <p>We collect and use your information for the following purposes:</p>
+        <ul>
+          <li>Account verification and authentication</li>
+          <li>Scheduling and completing scrap pickups</li>
+          <li>Displaying your order history and tracking pickup status</li>
+          <li>Providing customer support</li>
+          <li>Improving app reliability and user experience</li>
+        </ul>
+      </LegalSection>
+
+      <LegalSection title="Data Sharing">
+        <p>We share your information only in the following circumstances:</p>
+        <ul>
+          <li>With pickup partners only when necessary to complete your scheduled pickup</li>
+          <li>With Firebase/Google services for phone authentication</li>
+          <li>With legal authorities only when required by law</li>
+        </ul>
+        <p>We do not sell your personal data to third parties.</p>
+      </LegalSection>
+
+      <LegalSection title="Data Security">
+        <p>
+          We use secure transmission protocols where possible and limit access to your personal
+          information to operational purposes only. While we strive to protect your data, no method
+          of transmission over the internet is 100% secure.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Data Retention">
+        <p>
+          We keep your account and pickup data while your account is active or as legally required.
+          You may request account or data deletion at any time.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Your Rights">
+        <p>
+          You have the right to request account deletion, data correction, or access to your personal
+          information at any time. Contact us at{' '}
+          <a href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a> for such requests.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Children's Privacy">
+        <p>
+          Our app is not intended for children under the age of 13. We do not knowingly collect
+          personal information from children under 13.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Contact Us">
+        <p>
+          If you have any questions about this Privacy Policy, please contact us at:{' '}
+          <a href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
+        </p>
+      </LegalSection>
+
+      <p className="legal-updated">Last updated: June 1, 2026</p>
+    </LegalPageLayout>
+  )
+}
+
+function TermsOfServicePage() {
+  usePageMetadata(
+    'Terms of Service | SellYourScrap',
+    'Read the terms that apply when using the SellYourScrap Android app and pickup services.',
+  )
+
+  return (
+    <LegalPageLayout title="Terms of Service">
+      <LegalSection title="Acceptance of Terms">
+        <p>
+          By downloading, installing, or using the SellYourScrap mobile application, you agree to
+          be bound by these Terms of Service. If you do not agree to these terms, please do not use
+          our service.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Description of Service">
+        <p>
+          SellYourScrap is a mobile application that connects users with scrap pickup services. The
+          app allows users to check live scrap rates, schedule doorstep pickups, manage addresses,
+          track orders, and receive payment after collection.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="User Responsibilities">
+        <p>As a user of SellYourScrap, you agree to:</p>
+        <ul>
+          <li>Provide accurate phone number, address, and pickup details</li>
+          <li>Ensure scrap materials are ready for pickup at the scheduled time</li>
+          <li>Not submit illegal, hazardous, stolen, or restricted materials for pickup</li>
+          <li>Comply with all applicable local, state, and national laws</li>
+        </ul>
+      </LegalSection>
+
+      <LegalSection title="Pickup and Pricing">
+        <p>
+          Scrap rates displayed in the app may vary by location, category, quality, and current
+          market conditions. Final pricing may depend on actual weight and physical inspection of
+          materials at the time of pickup. We reserve the right to adjust pricing based on these
+          factors.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Payments">
+        <p>
+          Payment for collected scrap will be processed after pickup verification and inspection.
+          Payment timelines and methods will be communicated through the app.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Cancellation and Rescheduling">
+        <p>
+          Users may cancel or reschedule pickup appointments subject to availability. Repeated
+          cancellations may result in service restrictions.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Account Security">
+        <p>
+          You are responsible for maintaining the security of your account and for all activities
+          that occur under your account. Notify us immediately if you suspect any unauthorized use.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Limitation of Liability">
+        <p>
+          SellYourScrap is provided on an &quot;as-is&quot; basis. We make no warranties regarding
+          service availability, accuracy of rates, or pickup completion. We are not liable for any
+          indirect, incidental, or consequential damages arising from your use of the service.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Changes to Terms">
+        <p>
+          We reserve the right to modify these Terms of Service at any time. Updated terms will be
+          posted in the app, and continued use of the service constitutes acceptance of the modified
+          terms.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Contact Information">
+        <p>
+          For questions or concerns about these Terms of Service, please contact us at:{' '}
+          <a href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
+        </p>
+      </LegalSection>
+
+      <p className="legal-updated">Last updated: June 1, 2026</p>
+    </LegalPageLayout>
+  )
+}
+
+function DeleteAccountPage() {
+  const [form, setForm] = useState({
+    fullName: '',
+    email: '',
+    mobile: '',
+    reason: '',
+    confirmed: false,
+  })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [notice, setNotice] = useState('')
+
+  usePageMetadata(
+    'Delete Account | SellYourScrap',
+    'Request deletion of your SellYourScrap account and associated personal data.',
+  )
+
+  const updateField = (field: 'fullName' | 'email' | 'mobile' | 'reason', value: string) => {
+    setForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const validate = () => {
+    const nextErrors: Record<string, string> = {}
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const mobileDigits = form.mobile.replace(/\D/g, '')
+
+    if (!form.fullName.trim()) nextErrors.fullName = 'Please enter your full name.'
+    if (!form.email.trim()) nextErrors.email = 'Please enter your email address.'
+    else if (!emailPattern.test(form.email.trim())) nextErrors.email = 'Please enter a valid email address.'
+
+    if (!form.mobile.trim()) nextErrors.mobile = 'Please enter your registered mobile number.'
+    else if (mobileDigits.length !== 10) nextErrors.mobile = 'Please enter a valid 10-digit mobile number.'
+
+    if (!form.confirmed) {
+      nextErrors.confirmed = 'Please confirm that you understand this deletion is permanent.'
+    }
+
+    setErrors(nextErrors)
+    return Object.keys(nextErrors).length === 0
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setNotice('')
+
+    if (!validate()) return
+
+    const reason = form.reason || 'Not provided'
+    const mailtoBody = [
+      'Hello SellYourScrap Support,',
+      '',
+      'I would like to request permanent deletion of my SellYourScrap account and associated personal data.',
+      '',
+      `Full Name: ${form.fullName.trim()}`,
+      `Email Address: ${form.email.trim()}`,
+      `Registered Mobile Number: +91 ${form.mobile.replace(/\D/g, '')}`,
+      `Reason for Deletion: ${reason}`,
+      '',
+      'I understand that deleting my account is permanent and irreversible.',
+    ].join('\n')
+
+    const mailto = `mailto:support@sellyourscrap.in?subject=${encodeURIComponent('SellYourScrap Account Deletion Request')}&body=${encodeURIComponent(mailtoBody)}`
+    window.location.href = mailto
+    setNotice(
+      'Your email client should open with the deletion request details. If it does not open, please email support@sellyourscrap.in with the same details.',
+    )
+  }
+
+  return (
+    <LegalPageLayout
+      title="Account & Data Deletion Request"
+      intro="You can request permanent deletion of your SellYourScrap account and all associated personal data. This action is irreversible."
+      accent="destructive"
+      icon={<AlertTriangle size={26} />}
+    >
+      <section className="delete-warning-card">
+        <div className="delete-warning-heading">
+          <AlertTriangle size={18} />
+          <h2>What will be deleted</h2>
+        </div>
+        <ul>
+          <li>Your account profile and login credentials</li>
+          <li>Pickup order history and transaction records</li>
+          <li>Saved addresses and personal details</li>
+          <li>Any communications with our support team</li>
+        </ul>
+        <p>
+          Processing takes up to 30 days. Some data may be retained as required by Indian law
+          (e.g. GST records).
+        </p>
+      </section>
+
+      <form className="delete-form-card" onSubmit={handleSubmit} noValidate>
+        <div className="delete-form-grid">
+          <label className="form-field">
+            <span>Full Name *</span>
+            <input
+              type="text"
+              placeholder="As registered in the app"
+              value={form.fullName}
+              onChange={(event) => updateField('fullName', event.target.value)}
+              aria-invalid={Boolean(errors.fullName)}
+            />
+            {errors.fullName ? <small>{errors.fullName}</small> : null}
+          </label>
+
+          <label className="form-field">
+            <span>Email Address *</span>
+            <input
+              type="email"
+              placeholder="email@example.com"
+              value={form.email}
+              onChange={(event) => updateField('email', event.target.value)}
+              aria-invalid={Boolean(errors.email)}
+            />
+            {errors.email ? <small>{errors.email}</small> : null}
+          </label>
+
+          <label className="form-field">
+            <span>Registered Mobile Number *</span>
+            <div className="phone-input">
+              <span>+91</span>
+              <input
+                type="tel"
+                inputMode="numeric"
+                placeholder="xxxxx xxxxx"
+                value={form.mobile}
+                onChange={(event) => updateField('mobile', event.target.value)}
+                aria-invalid={Boolean(errors.mobile)}
+              />
+            </div>
+            {errors.mobile ? <small>{errors.mobile}</small> : null}
+          </label>
+
+          <label className="form-field">
+            <span>Reason for Deletion (optional)</span>
+            <select
+              value={form.reason}
+              onChange={(event) => updateField('reason', event.target.value)}
+            >
+              <option value="">Select a reason...</option>
+              <option value="I no longer use the app">I no longer use the app</option>
+              <option value="I created another account">I created another account</option>
+              <option value="Privacy concerns">Privacy concerns</option>
+              <option value="Service not available in my area">Service not available in my area</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <label className="checkbox-field">
+          <input
+            type="checkbox"
+            checked={form.confirmed}
+            onChange={(event) => setForm((current) => ({ ...current, confirmed: event.target.checked }))}
+          />
+          <span>
+            I understand that deleting my account is permanent and irreversible. All my data,
+            order history, and personal information will be permanently erased.
+          </span>
+        </label>
+        {errors.confirmed ? <p className="checkbox-error">{errors.confirmed}</p> : null}
+
+        <button className="button button-danger button-large delete-submit" type="submit">
+          Submit Deletion Request
+        </button>
+
+        <p className="delete-support-note">
+          Need help? Email us at <a href="mailto:support@sellyourscrap.in">support@sellyourscrap.in</a>
+        </p>
+        {notice ? <p className="delete-mailto-note">{notice}</p> : null}
+      </form>
+    </LegalPageLayout>
+  )
+}
+
+function LegalPageLayout({
+  title,
+  children,
+  intro,
+  accent = 'default',
+  icon,
+}: {
+  title: string
+  children: ReactNode
+  intro?: string
+  accent?: 'default' | 'destructive'
+  icon?: ReactNode
+}) {
+  return (
+    <section className={`legal-page ${accent === 'destructive' ? 'legal-page-destructive' : ''}`}>
+      <div className="container legal-container">
+        <div className="legal-hero reveal is-visible">
+          <p className="kicker">SellYourScrap Legal</p>
+          <div className="legal-title-row">
+            {icon ? <span className="legal-title-icon">{icon}</span> : null}
+            <h1>{title}</h1>
+          </div>
+          {intro ? <p className="legal-intro">{intro}</p> : null}
+        </div>
+        <article className="legal-card">{children}</article>
+      </div>
+    </section>
+  )
+}
+
+function LegalSection({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="legal-section">
+      <h2>{title}</h2>
+      {children}
+    </section>
+  )
+}
+
+function usePageMetadata(title: string, description: string) {
+  useEffect(() => {
+    document.title = title
+
+    let metaDescription = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = description
+  }, [title, description])
 }
 
 function SectionHeading({
