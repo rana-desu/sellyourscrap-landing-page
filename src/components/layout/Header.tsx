@@ -21,7 +21,7 @@ export function Header() {
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="header-inner">
         <Link className="brand" to="/" aria-label="SellYourScrap home" onClick={closeMenu}>
-          <BrandLogo />
+          <BrandLogo variant="navbar" />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           <Link to="/#how-it-works">How It Works</Link>

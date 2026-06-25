@@ -8,7 +8,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link className="footer-brand-logo" to="/" aria-label="SellYourScrap home">
-            <BrandLogo light />
+            <BrandLogo variant="footer" />
           </Link>
           <p>Built for simple, transparent scrap pickup from your phone.</p>
           <span>Currently focused on Android.</span>
