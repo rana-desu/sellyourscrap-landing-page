@@ -100,7 +100,7 @@ h3 {
   --logo-blue: #02152f;
   --logo-gray: #4d4c4d;
   --logo-green: var(--green-bright);
-  --logo-green-dark: var(--green);
+  --logo-green-dark: var(--green-bright);
   color: var(--logo-text);
   transition: color 250ms ease;
 }
