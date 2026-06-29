@@ -97,6 +97,8 @@ h3 {
   align-items: center;
   height: 100%;
   --logo-text: var(--ink);
+  --logo-blue: #02152f;
+  --logo-gray: #4d4c4d;
   --logo-green: var(--green-bright);
   --logo-green-dark: var(--green);
   color: var(--logo-text);
@@ -105,14 +107,18 @@ h3 {
 
 .brand-logo-footer {
   --logo-text: var(--white);
+  --logo-blue: var(--white);
+  --logo-gray: var(--white);
 }
 
-.site-header.is-scrolled .brand-logo-navbar {
+.site-header.is-scrolled .brand-logo-svg {
   --logo-text: var(--white);
+  --logo-blue: var(--white);
+  --logo-gray: var(--white);
 }
 
 .brand-logo-svg {
-  height: 50px;
+  height: 110px;
   width: auto;
   display: block;
 }
